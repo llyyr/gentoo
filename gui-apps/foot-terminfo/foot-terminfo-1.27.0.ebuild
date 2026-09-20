@@ -14,15 +14,14 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~ppc64 ~x86"
 
-RDEPEND="!>=sys-libs/ncurses-6.3[-minimal]"
 BDEPEND="sys-libs/ncurses"
 
 src_prepare() {
 	default
-	sed -i s/@default_terminfo@/foot/ foot.info || die
+	sed -i 's/@default_terminfo@/foot-extra/g' foot.info || die
 }
 
 src_install() {
 	dodir /usr/share/terminfo/
-	tic -xo "${ED}"/usr/share/terminfo foot.info || die
+	tic -xo "${ED}/usr/share/terminfo" -e foot-extra,foot-extra-direct foot.info || die
 }
